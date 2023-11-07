@@ -134,7 +134,9 @@ void ObjectHandler::initShaders()
 
 	tempShader.init("..\\res\\MandelbrotB"); // 8: The backup shader for the mandelbrot set, broken.
 	shaders.emplace_back(tempShader);
-	
+
+	tempShader.init("..\\res\\FBOShader");
+	shaders.emplace_back(tempShader);
 	// Custom Technique
 }
 

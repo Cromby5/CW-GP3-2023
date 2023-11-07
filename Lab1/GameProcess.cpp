@@ -103,10 +103,17 @@ void GameProcess::drawGame()
 
 	fbo.bindFBO();
 	// Draw to FBO
+	sky.drawSkyBox(myCamera);
+	objectHandler.drawObjects(myCamera, counter, newCount);
 
+	transform.SetPos(glm::vec3(2.0, 1.5, 3.0));
+	transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
+	transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
+
+	sky.drawCube(transform, myCamera);
 	fbo.unbindFBO();
 
-	//fbo.drawQuad(); // draw fbo to screen
+	fbo.drawQuad(); // draw fbo to screen
 
 	counter += deltaTime.GetDeltaTime() * 1.0f;
 	

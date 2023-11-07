@@ -11,7 +11,6 @@ ShaderHandler::ShaderHandler()
 	uniforms[0] = NULL;
 	uniforms[1] = NULL;
 	uniforms[2] = NULL;
-	
 }
 
 ShaderHandler::ShaderHandler(const std::string& filename)
@@ -137,8 +136,6 @@ void ShaderHandler::Update(const Transform& transform, const WorldCamera& camera
 	//ShaderHandler::UpdateSky(camera);
 	
 	// New emapping
-	
-	
 	
 }
 

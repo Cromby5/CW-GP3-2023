@@ -25,7 +25,6 @@ public:
 	void clearImgui();
 	void newFrameImgui(SDL_Event& event); // start of each loop
 
-
 private:
 
 	void returnError(std::string errorString);
