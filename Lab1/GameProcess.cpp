@@ -7,12 +7,6 @@ Transform transform;
 GameProcess::GameProcess()
 {
 	_gameState = GameState::PLAY;
-	DisplayWindow* _gameDisplay = new DisplayWindow(); //new display DONT NEED THESE????
-	SkyBox* sky = new SkyBox(); //new skybox
-	ObjectHandler* objectHandler = new ObjectHandler(); //new object handler
-	
-	MeshHandler* mesh1 = new MeshHandler();
-	MeshHandler* mesh2 = new MeshHandler();
 }
 
 GameProcess::~GameProcess()
@@ -31,6 +25,9 @@ void GameProcess::initSystems()
 	sky.initSkyBox();
 	objectHandler.initObjects();
 	gameAudio.initAudio();
+
+	fbo.initQuad();
+	fbo.genFBO(_gameDisplay.getScreenWidth(), _gameDisplay.getScreenHeight());
 	
 	myCamera.initWorldCamera(glm::vec3(0, 0, 5), 70.0f, (float)_gameDisplay.getScreenWidth()/_gameDisplay.getScreenHeight(), 0.01f, 1000.0f);
 
@@ -41,15 +38,11 @@ void GameProcess::gameProcessLoop()
 {
 	while (_gameState != GameState::EXIT)
 	{
-		// deltatime
-		lastTicks = currentTicks;
-	    currentTicks = SDL_GetPerformanceCounter();
-		deltatime = ((currentTicks - lastTicks) * 1 / (double)SDL_GetPerformanceFrequency());; // deltatime values are in ms
-
+		deltaTime.Update();
 		gameAudio.playBackMusic();
 		Input();
 		drawGame();
-		objectHandler.collision(deltatime,gameAudio);
+		objectHandler.collision(deltaTime.GetDeltaTime(), gameAudio);
 	}
 }
 
@@ -66,7 +59,7 @@ void GameProcess::Input()
 			case SDL_KEYDOWN:
 					switch (event.key.keysym.sym)
 					{
-						while (deltatime > 0) // Key presses will still be registered from the keydown event, however they will only be processed if the deltatime is positive
+						while (deltaTime.GetDeltaTime() > 0) // Key presses will still be registered from the keydown event, however they will only be processed if the deltatime is positive
 						{
 							case SDLK_w:
 								myCamera.MoveForward(speed);
@@ -98,19 +91,24 @@ void GameProcess::Input()
 void GameProcess::drawGame()
 {
 	_gameDisplay.clearDisplayBuffer(0.0f, 0.0f, 0.0f, 1.0f);
-	
 
 	sky.drawSkyBox(myCamera);
 	objectHandler.drawObjects(myCamera,counter,newCount);
-	
-	
+
 	transform.SetPos(glm::vec3(2.0, 1.5, 3.0));
 	transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
 	transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
 	
 	sky.drawCube(transform, myCamera);
 
-	counter += deltatime * 1.0f;
+	fbo.bindFBO();
+	// Draw to FBO
+
+	fbo.unbindFBO();
+
+	//fbo.drawQuad(); // draw fbo to screen
+
+	counter += deltaTime.GetDeltaTime() * 1.0f;
 	
 	newCount += 0.1f; // I believe I broke deltatime / or I am blind to a very obvious issu, so this is a really bad temporary fix to display GP CW without taking up more time
 	
@@ -118,10 +116,3 @@ void GameProcess::drawGame()
 	glEnd();
 	_gameDisplay.swapBuffer();
 } 
-
-
-
-
-
-
-

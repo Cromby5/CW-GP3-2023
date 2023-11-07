@@ -3,6 +3,7 @@
 #include <GL\glew.h>
 #include <iostream>
 #include <string>
+
 using namespace std;
 
 class DisplayWindow
@@ -17,6 +18,13 @@ public:
 	float getScreenWidth();
 	float getScreenHeight();
 	SDL_Window* getWindow();
+
+	//imgui
+	void initImgui();
+	void renderImgui();
+	void clearImgui();
+	void newFrameImgui(SDL_Event& event); // start of each loop
+
 
 private:
 

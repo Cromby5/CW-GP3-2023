@@ -9,6 +9,8 @@
 #include "WorldCamera.h"
 #include "SkyBox.h"
 #include "ObjectHandler.h"
+#include "Deltatime.h"
+#include "FBO.h"
 
 enum class GameState{PLAY, EXIT};
 
@@ -36,13 +38,11 @@ private:
 	
 	SkyBox sky;
 	ObjectHandler objectHandler;
+	DeltaTime deltaTime;
+	FBO fbo;
 
 	float counter = 0.0f;
 	float newCount = 0.0f;
 	float speed = 0.5f;
-	// deltatime variables, keeping track of time and keep it consitent between variable frame rates
-	float deltatime = 0.0f;
-	float lastTicks = 0.0f;
-	float currentTicks = 0.0f;
 };
 

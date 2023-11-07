@@ -133,7 +133,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DeltaTime.CPP" />
     <ClCompile Include="DisplayWindow.cpp" />
+    <ClCompile Include="FBO.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameProcess.cpp" />
     <ClCompile Include="MeshHandler.cpp" />
@@ -146,6 +148,8 @@
     <ClCompile Include="TextureMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DeltaTime.h" />
+    <ClInclude Include="FBO.h" />
     <ClInclude Include="ObjectHandler.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="WorldCamera.h" />
