@@ -71,9 +71,9 @@ void ShaderHandler::init(const std::string& filename)
 void ShaderHandler::initGeo()
 {
 	program = glCreateProgram(); // create shader program (openGL saves as ref number)
-	shaders1[0] = CompileShader(LoadShader("..\\res\\shaderGeoText.vert"), GL_VERTEX_SHADER); // create vertex shader
-	shaders1[1] = CompileShader(LoadShader("..\\res\\shaderGeoText.geom"), GL_GEOMETRY_SHADER); // create fragment shader
-	shaders1[2] = CompileShader(LoadShader("..\\res\\shaderGeoText.frag"), GL_FRAGMENT_SHADER); // create fragment shader
+	shaders1[0] = CompileShader(LoadShader("..\\res\\Shaders\\shaderGeoText.vert"), GL_VERTEX_SHADER); // create vertex shader
+	shaders1[1] = CompileShader(LoadShader("..\\res\\Shaders\\shaderGeoText.geom"), GL_GEOMETRY_SHADER); // create fragment shader
+	shaders1[2] = CompileShader(LoadShader("..\\res\\Shaders\\shaderGeoText.frag"), GL_FRAGMENT_SHADER); // create fragment shader
 
 
 	for (unsigned int i = 0; i < 3; i++)

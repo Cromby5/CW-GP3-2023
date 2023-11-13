@@ -106,19 +106,19 @@ void ObjectHandler::initShaders()
 	// Load in all the shaders and store them in the vector to be used later by any object.
 	shaders.reserve(10); // prevent reallocation of the vector in this example scene.
 	
-	tempShader.init("..\\res\\shader"); // 0:
+	tempShader.init("..\\res\\Shaders\\shader"); // 0:
 	shaders.emplace_back(tempShader);
 	
-	tempShader.init("..\\res\\SkyboxShader"); // 1:
+	tempShader.init("..\\res\\Shaders\\SkyboxShader"); // 1:
 	shaders.emplace_back(tempShader);
 	
-	tempShader.init("..\\res\\ReflectShader"); // 2:
+	tempShader.init("..\\res\\Shaders\\ReflectShader"); // 2:
 	shaders.emplace_back(tempShader);
 	
-	tempShader.init("..\\res\\RefractShader"); // 3:
+	tempShader.init("..\\res\\Shaders\\RefractShader"); // 3:
 	shaders.emplace_back(tempShader);
 	
-	tempShader.init("..\\res\\LightShader"); // 4:
+	tempShader.init("..\\res\\Shaders\\LightShader"); // 4:
 	shaders.emplace_back(tempShader);
 
 	// NEW for Graphics Programming
@@ -126,13 +126,13 @@ void ObjectHandler::initShaders()
 	tempShader.initGeo(); // 5: Force Exploding Shader, only reason for this is to show the use of a geometry shader which is required.
 	shaders.emplace_back(tempShader);
 
-	tempShader.init("..\\res\\eMapping"); // 6: The shader for the environment mapping, Slightly different from the reflect shader since textures can be used ontop
+	tempShader.init("..\\res\\Shaders\\eMapping"); // 6: The shader for the environment mapping, Slightly different from the reflect shader since textures can be used ontop
 	shaders.emplace_back(tempShader);
 
-	tempShader.init("..\\res\\Mandelbrot"); // 7: The main shader for the mandelbrot set, 
+	tempShader.init("..\\res\\Shaders\\Mandelbrot"); // 7: The main shader for the mandelbrot set, 
 	shaders.emplace_back(tempShader);
 
-	tempShader.init("..\\res\\MandelbrotB"); // 8: The backup shader for the mandelbrot set, broken.
+	tempShader.init("..\\res\\Shaders\\MandelbrotB"); // 8: The backup shader for the mandelbrot set, broken.
 	shaders.emplace_back(tempShader);
 	
 	// Custom Technique

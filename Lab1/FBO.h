@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GL/glew.h>
+#include "ShaderHandler.h"
 
 class FBO
 {
@@ -15,6 +16,11 @@ class FBO
 		void initQuad();
 		void drawQuad();
 
+		// Gbuffer, deffered rendering
+		void GenGBuffer(GLsizei SCR_WIDTH, GLsizei SCR_HEIGHT);
+		void geoPass();
+		void lightPass();
+
 
 	private:
 		GLuint fbo; // Frame Buffer 
@@ -22,4 +28,9 @@ class FBO
 		GLuint cbo; // Colour Buffer 
 		GLuint quadVAO;
 		GLuint quadVBO;
+
+		ShaderHandler fboShader;
+
+		ShaderHandler gBufferShader;
+		unsigned int gBuffer, gPosition, gNormal, gAlbedoSpec;
 };

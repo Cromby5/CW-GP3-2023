@@ -133,7 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DeltaTime.CPP" />
+    <ClCompile Include="DeltaTime.cpp" />
     <ClCompile Include="DisplayWindow.cpp" />
     <ClCompile Include="FBO.cpp" />
     <ClCompile Include="main.cpp" />
@@ -164,29 +164,6 @@
     <ClInclude Include="transform.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\Basic.shader" />
-    <None Include="..\res\eMapping.frag" />
-    <None Include="..\res\eMapping.vert" />
-    <None Include="..\res\LightShader.frag" />
-    <None Include="..\res\LightShader.vert" />
-    <None Include="..\res\Mandelbrot.frag" />
-    <None Include="..\res\Mandelbrot.vert" />
-    <None Include="..\res\MandelbrotB.frag" />
-    <None Include="..\res\MandelbrotB.vert" />
-    <None Include="..\res\ReflectShader.frag" />
-    <None Include="..\res\ReflectShader.vert" />
-    <None Include="..\res\RefractShader.frag" />
-    <None Include="..\res\RefractShader.vert" />
-    <None Include="..\res\shader.frag" />
-    <None Include="..\res\shader.vert" />
-    <None Include="..\res\shaderGeoText.frag" />
-    <None Include="..\res\shaderGeoText.geom" />
-    <None Include="..\res\shaderGeoText.vert" />
-    <None Include="..\res\Skybox.shader" />
-    <None Include="..\res\SkyboxShader.frag" />
-    <None Include="..\res\SkyboxShader.vert" />
-  </ItemGroup>
-  <ItemGroup>
     <Object Include="..\res\Models\backpack.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </Object>
@@ -214,6 +191,43 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\res\Audio\background.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\Shaders\Basic.shader" />
+    <None Include="..\res\Shaders\eMapping.frag" />
+    <None Include="..\res\Shaders\eMapping.vert" />
+    <None Include="..\res\Shaders\fogShader.frag" />
+    <None Include="..\res\Shaders\fogShader.vert" />
+    <None Include="..\res\Shaders\Glow.frag" />
+    <None Include="..\res\Shaders\Glow.vert" />
+    <None Include="..\res\Shaders\LightShader.frag" />
+    <None Include="..\res\Shaders\LightShader.vert" />
+    <None Include="..\res\Shaders\Mandelbrot.frag" />
+    <None Include="..\res\Shaders\Mandelbrot.vert" />
+    <None Include="..\res\Shaders\MandelbrotB.frag" />
+    <None Include="..\res\Shaders\MandelbrotB.vert" />
+    <None Include="..\res\Shaders\noise.frag" />
+    <None Include="..\res\Shaders\noise.vert" />
+    <None Include="..\res\Shaders\ReflectShader.frag" />
+    <None Include="..\res\Shaders\ReflectShader.vert" />
+    <None Include="..\res\Shaders\RefractShader.frag" />
+    <None Include="..\res\Shaders\RefractShader.vert" />
+    <None Include="..\res\Shaders\shader.frag" />
+    <None Include="..\res\Shaders\shader.vert" />
+    <None Include="..\res\Shaders\shaderGeoText.frag" />
+    <None Include="..\res\Shaders\shaderGeoText.geom" />
+    <None Include="..\res\Shaders\shaderGeoText.vert" />
+    <None Include="..\res\Shaders\shaderReflection.frag" />
+    <None Include="..\res\Shaders\shaderReflection.vert" />
+    <None Include="..\res\Shaders\shaderRim.frag" />
+    <None Include="..\res\Shaders\shaderRim.vert" />
+    <None Include="..\res\Shaders\shaderSkybox.frag" />
+    <None Include="..\res\Shaders\shaderSkybox.vert" />
+    <None Include="..\res\Shaders\shaderToon.frag" />
+    <None Include="..\res\Shaders\shaderToon.vert" />
+    <None Include="..\res\Shaders\Skybox.shader" />
+    <None Include="..\res\Shaders\SkyboxShader.frag" />
+    <None Include="..\res\Shaders\SkyboxShader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

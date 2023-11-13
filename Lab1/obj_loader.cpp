@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <map>
+#include <chrono>
 
 static bool CompareOBJIndexPtr(const OBJIndex* a, const OBJIndex* b);
 static inline unsigned int FindNextChar(unsigned int start, const char* str, unsigned int length, char token);
@@ -12,45 +13,32 @@ static inline std::vector<std::string> SplitString(const std::string &s, char de
 
 OBJModel::OBJModel(const std::string& fileName)
 {
-	hasUVs = false;
-	hasNormals = false;
-    std::ifstream file;
-    file.open(fileName.c_str());
-
-    std::string line;
-    if(file.is_open())
+    hasUVs = false;
+    hasNormals = false;
+    FILE* newFile = fopen(fileName.c_str(), "r");
+    if (newFile == NULL)
     {
-        while(file.good())
-        {
-            getline(file, line);
-        
-            unsigned int lineLength = line.length();
-            
-            if(lineLength < 2)
-                continue;
-            
-            const char* lineCStr = line.c_str();
-            
-            switch(lineCStr[0])
-            {
-                case 'v':
-                    if(lineCStr[1] == 't')
-                        this->uvs.push_back(ParseOBJVec2(line));
-                    else if(lineCStr[1] == 'n')
-                        this->normals.push_back(ParseOBJVec3(line));
-                    else if(lineCStr[1] == ' ' || lineCStr[1] == '\t')
-                        this->vertices.push_back(ParseOBJVec3(line));
-                break;
-                case 'f':
-                    CreateOBJFace(line);
-                break;
-                default: break;
-            };
-        }
+        std::cout << "Could not open file";
+        return;
     }
-    else
+    char line[1024];
+    while (fgets(line, sizeof(line), newFile))
     {
-        std::cerr << "Unable to load mesh: " << fileName << std::endl;
+        switch (line[0])
+        {
+        case 'v':
+            if (line[1] == 't')
+                this->uvs.push_back(ParseOBJVec2(line));
+            else if (line[1] == 'n')
+                this->normals.push_back(ParseOBJVec3(line));
+            else if (line[1] == ' ' || line[1] == '\t')
+                this->vertices.push_back(ParseOBJVec3(line));
+            break;
+        case 'f':
+            CreateOBJFace(line);
+            break;
+        default: break;
+        };
     }
 }
 

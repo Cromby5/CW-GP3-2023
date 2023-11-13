@@ -28,6 +28,7 @@ void GameProcess::initSystems()
 
 	fbo.initQuad();
 	fbo.genFBO(_gameDisplay.getScreenWidth(), _gameDisplay.getScreenHeight());
+	fbo.GenGBuffer(_gameDisplay.getScreenWidth(), _gameDisplay.getScreenHeight());
 	
 	myCamera.initWorldCamera(glm::vec3(0, 0, 5), 70.0f, (float)_gameDisplay.getScreenWidth()/_gameDisplay.getScreenHeight(), 0.01f, 1000.0f);
 
@@ -90,23 +91,20 @@ void GameProcess::Input()
 
 void GameProcess::drawGame()
 {
-	_gameDisplay.clearDisplayBuffer(0.0f, 0.0f, 0.0f, 1.0f);
+	fbo.bindFBO(); // Draw to FBO
+		_gameDisplay.clearDisplayBuffer(0.0f, 0.0f, 0.0f, 1.0f);
 
-	sky.drawSkyBox(myCamera);
-	objectHandler.drawObjects(myCamera,counter,newCount);
+		sky.drawSkyBox(myCamera);
+		objectHandler.drawObjects(myCamera,counter,newCount);
 
-	transform.SetPos(glm::vec3(2.0, 1.5, 3.0));
-	transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
-	transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
+		transform.SetPos(glm::vec3(2.0, 1.5, 3.0));
+		transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
+		transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
 	
-	sky.drawCube(transform, myCamera);
-
-	fbo.bindFBO();
-	// Draw to FBO
-
+		sky.drawCube(transform, myCamera);
 	fbo.unbindFBO();
 
-	//fbo.drawQuad(); // draw fbo to screen
+	fbo.drawQuad(); // draw fbo to screen
 
 	counter += deltaTime.GetDeltaTime() * 1.0f;
 	

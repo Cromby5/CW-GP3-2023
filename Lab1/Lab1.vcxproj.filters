@@ -48,7 +48,7 @@
     <ClCompile Include="stb_image.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DeltaTime.CPP">
+    <ClCompile Include="DeltaTime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FBO.cpp">
@@ -100,71 +100,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\res\shader.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\shader.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\SkyboxShader.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\SkyboxShader.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\Basic.shader">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\Skybox.shader">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\ReflectShader.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\ReflectShader.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\RefractShader.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\RefractShader.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\LightShader.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\LightShader.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\shaderGeoText.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\shaderGeoText.geom">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\shaderGeoText.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\eMapping.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\eMapping.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\Mandelbrot.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\Mandelbrot.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\MandelbrotB.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\res\MandelbrotB.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Object Include="..\res\Models\cube.obj">
       <Filter>Resource Files</Filter>
     </Object>
@@ -194,5 +129,112 @@
     <Media Include="..\res\Audio\background.wav">
       <Filter>Resource Files</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\Shaders\Basic.shader">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\eMapping.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\eMapping.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\fogShader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\fogShader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\Glow.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\Glow.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\LightShader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\LightShader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\Mandelbrot.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\Mandelbrot.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\MandelbrotB.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\MandelbrotB.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\noise.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\noise.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\ReflectShader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\ReflectShader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\RefractShader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\RefractShader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\shader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\shader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\shaderGeoText.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\shaderGeoText.geom">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\shaderGeoText.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\shaderReflection.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\shaderReflection.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\shaderRim.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\shaderRim.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\shaderSkybox.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\shaderSkybox.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\shaderToon.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\shaderToon.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\Skybox.shader">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\SkyboxShader.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\Shaders\SkyboxShader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

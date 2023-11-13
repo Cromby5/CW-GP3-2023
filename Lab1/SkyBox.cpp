@@ -112,8 +112,8 @@ float cubeVertices[] = {
 
 void SkyBox::initSkyBox()
 {
-	skyShader.init("..\\res\\SkyboxShader");
-	reflectShader.init("..\\res\\ReflectShader");
+	skyShader.init("..\\res\\Shaders\\SkyboxShader");
+	reflectShader.init("..\\res\\Shaders\\ReflectShader");
 	// cube VAO
 	glGenVertexArrays(1, &cubeVAO);
 	glGenBuffers(1, &cubeVBO);
