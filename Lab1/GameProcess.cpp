@@ -26,6 +26,8 @@ void GameProcess::initSystems()
 	objectHandler.initObjects();
 	gameAudio.initAudio();
 
+	_gameDisplay.initImgui();
+
 	fbo.initQuad();
 	fbo.genFBO(_gameDisplay.getScreenWidth(), _gameDisplay.getScreenHeight());
 	fbo.GenGBuffer(_gameDisplay.getScreenWidth(), _gameDisplay.getScreenHeight());
@@ -42,6 +44,7 @@ void GameProcess::gameProcessLoop()
 		deltaTime.Update();
 		gameAudio.playBackMusic();
 		Input();
+		_gameDisplay.newFrameImgui();
 		drawGame();
 		objectHandler.collision(deltaTime.GetDeltaTime(), gameAudio);
 	}
@@ -76,6 +79,7 @@ void GameProcess::Input()
 								break;
 							case SDLK_ESCAPE:
 								_gameState = GameState::EXIT;
+								_gameDisplay.clearImgui();
 								break;
 						}
 					}
@@ -86,6 +90,7 @@ void GameProcess::Input()
 				myCamera.RotateY((-event.motion.yrel / 1000.0f)); // Rotate camera on Y axis (Remove the - on the yrel to invert the rotation)
 				break;
 		}
+		_gameDisplay.imguiProcessEvent(event); // Start the Dear ImGui frame
 	}
 }
 
@@ -105,11 +110,11 @@ void GameProcess::drawGame()
 	fbo.unbindFBO();
 
 	fbo.drawQuad(); // draw fbo to screen
-
+	_gameDisplay.renderImgui(); // Render imgui
 	counter += deltaTime.GetDeltaTime() * 1.0f;
 	
 	newCount += 0.1f; // I believe I broke deltatime / or I am blind to a very obvious issu, so this is a really bad temporary fix to display GP CW without taking up more time
-	
+
 	glEnableClientState(GL_COLOR_ARRAY); 
 	glEnd();
 	_gameDisplay.swapBuffer();

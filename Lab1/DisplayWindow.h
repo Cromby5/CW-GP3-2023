@@ -1,8 +1,13 @@
 #pragma once
 #include <SDL/SDL.h>
 #include <GL\glew.h>
+
 #include <iostream>
 #include <string>
+
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_sdl2.h"
+#include "imgui/imgui_impl_opengl3.h"
 
 using namespace std;
 
@@ -23,7 +28,8 @@ public:
 	void initImgui();
 	void renderImgui();
 	void clearImgui();
-	void newFrameImgui(SDL_Event& event); // start of each loop
+	void imguiProcessEvent(SDL_Event& event);
+	void newFrameImgui(); // start of each loop
 
 
 private:
