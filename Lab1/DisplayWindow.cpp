@@ -89,6 +89,7 @@ void DisplayWindow::initDisplay()
 	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
 }
 
+#pragma region imgui
 void DisplayWindow::initImgui()
 {
 	//// Setup Dear ImGui context
@@ -124,7 +125,6 @@ void DisplayWindow::newFrameImgui()
 void DisplayWindow::renderImgui()
 {
 	//// Rendering
-	cout << "IMGUI:: RENDER" << endl;
 	//// (Your code clears your framebuffer, renders your other stuff etc.)
 	ImGui::Render();
 
@@ -141,4 +141,4 @@ void DisplayWindow::clearImgui()
 	ImGui::DestroyContext();
 }
 
-
+#pragma endregion

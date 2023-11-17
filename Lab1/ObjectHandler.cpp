@@ -159,9 +159,6 @@ void ObjectHandler::initMeshes()
 	tempMesh.loadModel("..\\res\\Models\\canoe.obj");
 	meshs.emplace_back(tempMesh);
 
-	tempMesh.loadModel("..\\res\\Models\\backpack.obj");
-	meshs.emplace_back(tempMesh);
-
 	tempMesh.loadModel("..\\res\\Models\\Wooden Crate 01.obj");
 	meshs.emplace_back(tempMesh);
 	*/

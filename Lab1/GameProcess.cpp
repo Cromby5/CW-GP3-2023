@@ -59,6 +59,7 @@ void GameProcess::Input()
 		{
 			case SDL_QUIT:
 				_gameState = GameState::EXIT;
+				_gameDisplay.clearImgui();
 				break;
 			case SDL_KEYDOWN:
 					switch (event.key.keysym.sym)

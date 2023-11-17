@@ -160,32 +160,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Object Include="..\res\Models\cube.obj">
-      <Filter>Resource Files</Filter>
-    </Object>
-    <Object Include="..\res\Models\monkey3.obj">
-      <Filter>Resource Files</Filter>
-    </Object>
-    <Object Include="..\res\Models\canoe.obj">
-      <Filter>Resource Files</Filter>
-    </Object>
-    <Object Include="..\res\Models\cart.obj">
-      <Filter>Resource Files</Filter>
-    </Object>
-    <Object Include="..\res\Models\backpack.obj">
-      <Filter>Resource Files</Filter>
-    </Object>
-    <Object Include="..\res\Models\CROCODIL.OBJ">
-      <Filter>Resource Files</Filter>
-    </Object>
-    <Object Include="..\res\Models\Sci-fi_Container_Box.obj">
-      <Filter>Resource Files</Filter>
-    </Object>
-    <Object Include="..\res\Models\Wooden Crate 01.obj">
-      <Filter>Resource Files</Filter>
-    </Object>
-  </ItemGroup>
-  <ItemGroup>
     <Media Include="..\res\Audio\background.wav">
       <Filter>Resource Files</Filter>
     </Media>

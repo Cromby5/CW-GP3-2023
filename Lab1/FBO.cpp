@@ -92,7 +92,7 @@ void FBO::drawQuad()
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 } 
 
-
+#pragma region Deffered Rendering
 void FBO::GenGBuffer(GLsizei SCR_WIDTH, GLsizei SCR_HEIGHT)
 {
 	// configure g-buffer framebuffer
@@ -184,4 +184,6 @@ void FBO::GenGBuffer(GLsizei SCR_WIDTH, GLsizei SCR_HEIGHT)
 //	}
 //	shaderLightingPass.setVec3("viewPos", camera.Position);
 //}
+
+#pragma endregion
 

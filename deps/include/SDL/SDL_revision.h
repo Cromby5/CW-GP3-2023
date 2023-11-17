@@ -1,2 +1,8 @@
-#define SDL_REVISION "https://github.com/libsdl-org/SDL.git@2e9821423a237a1206e3c09020778faacfe430be"
+/* #undef SDL_VENDOR_INFO */
 #define SDL_REVISION_NUMBER 0
+
+#ifdef SDL_VENDOR_INFO
+#define SDL_REVISION "SDL-2.28.5-no-vcs (" SDL_VENDOR_INFO ")"
+#else
+#define SDL_REVISION "SDL-2.28.5-no-vcs"
+#endif
