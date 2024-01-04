@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-Transform transform;
+Transform transformf;
 
 GameProcess::GameProcess()
 {
@@ -57,39 +57,45 @@ void GameProcess::Input()
 	{
 		switch (event.type)
 		{
-			case SDL_QUIT:
-				_gameState = GameState::EXIT;
-				_gameDisplay.clearImgui();
-				break;
-			case SDL_KEYDOWN:
-					switch (event.key.keysym.sym)
-					{
-						while (deltaTime.GetDeltaTime() > 0) // Key presses will still be registered from the keydown event, however they will only be processed if the deltatime is positive
-						{
-							case SDLK_w:
-								myCamera.MoveForward(speed);
-								break;
-							case SDLK_s:
-								myCamera.MoveForward(-speed);
-								break;
-							case SDLK_a:
-								myCamera.MoveRight(-speed);
-								break;
-							case SDLK_d:
-								myCamera.MoveRight(speed);
-								break;
-							case SDLK_ESCAPE:
-								_gameState = GameState::EXIT;
-								_gameDisplay.clearImgui();
-								break;
-						}
-					}
-				break;
-			case SDL_MOUSEMOTION:
+		case SDL_QUIT:
+			_gameDisplay.clearImgui();
+			_gameState = GameState::EXIT;
+			break;
+		case SDL_KEYDOWN:
+			switch (event.key.keysym.sym)
+			{
+				while (deltaTime.GetDeltaTime() > 0) // Key presses will still be registered from the keydown event, however they will only be processed if the deltatime is positive
+				{
+					case SDLK_w:
+						myCamera.MoveForward(speed);
+						break;
+					case SDLK_s:
+						myCamera.MoveForward(-speed);
+						break;
+					case SDLK_a:
+						myCamera.MoveRight(-speed);
+						break;
+					case SDLK_d:
+						myCamera.MoveRight(speed);
+						break;
+					case SDLK_ESCAPE:
+						_gameState = GameState::EXIT;
+						_gameDisplay.clearImgui();
+						break;
+				}
+			}
+			break;
+		case SDL_MOUSEMOTION:
+			if (ImGui::GetIO().WantCaptureMouse)
+				// If the mouse is over an imgui window, do not rotate the camera
+				SDL_SetRelativeMouseMode(SDL_FALSE); // Unlock mouse from window and show it on screen
+			else
+			{
 				SDL_SetRelativeMouseMode(SDL_TRUE); // Lock mouse to window and hide it from view 
 				myCamera.RotateX((-event.motion.xrel / 1000.0f)); // Rotate camera on X axis (Remove the - on the xrel to invert the rotation)
 				myCamera.RotateY((-event.motion.yrel / 1000.0f)); // Rotate camera on Y axis (Remove the - on the yrel to invert the rotation)
-				break;
+			}
+		break;
 		}
 		_gameDisplay.imguiProcessEvent(event); // Start the Dear ImGui frame
 	}
@@ -103,11 +109,11 @@ void GameProcess::drawGame()
 		sky.drawSkyBox(myCamera);
 		objectHandler.drawObjects(myCamera,counter,newCount);
 
-		transform.SetPos(glm::vec3(2.0, 1.5, 3.0));
-		transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
-		transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
+		transformf.SetPos(glm::vec3(2.0, 1.5, 3.0));
+		transformf.SetRot(glm::vec3(0.0, 0.0, 0.0));
+		transformf.SetScale(glm::vec3(1.0, 1.0, 1.0));
 	
-		sky.drawCube(transform, myCamera);
+		//sky.drawCube(transformf, myCamera);
 	fbo.unbindFBO();
 
 	fbo.drawQuad(); // draw fbo to screen

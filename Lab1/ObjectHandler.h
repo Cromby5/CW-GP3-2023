@@ -91,5 +91,7 @@ private:
 	std::vector<ShaderHandler> shaders;
 	std::vector<MeshHandler> meshs;
 	
+
+	std::vector<Mesh> Ameshs;
 };
 

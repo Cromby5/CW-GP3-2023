@@ -30,6 +30,7 @@ public:
 	void clearImgui();
 	void imguiProcessEvent(SDL_Event& event);
 	void newFrameImgui(); // start of each loop
+	void myCustomImguiWindow();
 
 
 private:

@@ -1,9 +1,11 @@
 #include "ObjectHandler.h"
 #include <iostream>
+#include <filesystem>
 
+Model tempModel;
 ObjectHandler::ObjectHandler()
 {
-	
+
 }
 
 
@@ -20,7 +22,8 @@ void ObjectHandler::initObjects()
 	initTextures();
 	initShaders();
 	initMeshes();
-	
+	//tempModel.loadModel("../res/Models/backpack/backpack.obj");
+	tempModel.loadModel("../res/Models/Wooden Crate 01.obj");
 	objects.reserve(15); // reserve 15 objects to prevent reallocation of the vector in this example scene.
 
 	tempObject.LoadObject(meshs[0], textures[2], shaders[5]); // Exploding monkey head
@@ -39,15 +42,15 @@ void ObjectHandler::initObjects()
 	objects[1].SetObjectRot(glm::vec3(0, 0, 0));
 
 	// MANDEL B (First Attempt, left in for fun)
-	tempObject.LoadObject(meshs[2], textures[2], shaders[8]);
-	objects.emplace_back(tempObject);
-	objects[2].SetObjectPos(glm::vec3(45, -6.0, 45));
-	objects[2].SetObjectRot(glm::vec3(0, 0, 0));
+	// tempObject.LoadObject(meshs[2], textures[2], shaders[8]);
+	// objects.emplace_back(tempObject);
+	// objects[2].SetObjectPos(glm::vec3(45, -6.0, 45));
+	// objects[2].SetObjectRot(glm::vec3(0, 0, 0));
 
 	// Emap cube
-	tempObject.LoadObject(meshs[1], textures[1], shaders[6]);
-	objects.emplace_back(tempObject);
-	objects[3].SetObjectPos(glm::vec3(0, 2, 2));
+	//tempObject.LoadObject(meshs[1], textures[1], shaders[6]);
+	//objects.emplace_back(tempObject);
+	//objects[3].SetObjectPos(glm::vec3(0, 2, 2));
 	
 	// Repeat for every object to be added
 	/*
@@ -152,6 +155,23 @@ void ObjectHandler::initMeshes()
 	tempMesh.loadModel("..\\res\\Models\\plane.obj");
 	meshs.emplace_back(tempMesh);
 
+
+	// Asteroid Game models
+	// tempMesh.loadModel("..\\res\\Models\\ast.obj");
+	// meshs.emplace_back(tempMesh);
+
+	// tempMesh.loadModel("..\\res\\Models\\Asteroid.obj");
+	// meshs.emplace_back(tempMesh);
+
+	// tempMesh.loadModel("..\\res\\Models\\Asteroid1.obj");
+	// meshs.emplace_back(tempMesh);
+
+	// tempMesh.loadModel("..\\res\\Models\\R33.obj");
+	// meshs.emplace_back(tempMesh);
+
+	// tempMesh.loadModel("..\\res\\Models\\rock.obj");
+	// meshs.emplace_back(tempMesh);
+
 	/*
 	tempMesh.loadModel("..\\res\\Models\\cart.obj");
 	meshs.emplace_back(tempMesh);
@@ -206,6 +226,10 @@ void ObjectHandler::drawObjects(WorldCamera& myCamera , float counter, float new
 		objects[i]._mesh.draw();
 		objects[i]._mesh.updateSphereData(objects[i]._transform.GetPos(), 1.0f);
 	}
+	shaders[0].Use();
+	shaders[0].Update(objects[0]._transform, myCamera, counter, newCount);
+	textures[2].Bind(0);
+	tempModel.Draw(objects[0]._shader);
 }
 
 // Limited to the first 2 objects created for demo purposes and to prevent unecssarsary performance loss for our objects that will never move in this example.
@@ -235,6 +259,3 @@ bool ObjectHandler::collision(float deltatime, AudioHandler& audio)
 	// To make sure all paths return a value
 	return false;
 }
-
-
-
