@@ -18,9 +18,9 @@ public:
 		
 	};
 	// Overrides to make it easier to create objects
-	Object(MeshHandler& mesh, TextureMap& texture, ShaderHandler& shader)
+	Object(MeshHandler& mesh, Model& model ,TextureMap& texture, ShaderHandler& shader)
 	{
-		LoadObject(mesh, texture, shader);
+		LoadObject(mesh, model ,texture, shader);
 	};
 	
 	Object(const std::string& fileName, TextureMap& texture, ShaderHandler& shader)
@@ -28,11 +28,12 @@ public:
 		LoadObjectFILE(fileName, texture, shader);
 	};
 	// For passing in an already loaded mesh
-	void LoadObject(MeshHandler& mesh, TextureMap& texture, ShaderHandler& shader)
+	void LoadObject(MeshHandler& mesh, Model& model, TextureMap& texture, ShaderHandler& shader)
 	{
 		_texture = texture;
 		_shader = shader;
-		_mesh = mesh;
+		_mesh = mesh; // REMOVE
+		_model = model;
 		_transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
 		_transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
 		_transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
@@ -42,7 +43,8 @@ public:
 	{
 		_texture = texture;
 		_shader = shader;
-		_mesh.loadModel(fileName);
+		_mesh.loadModel(fileName); // REMOVE
+		_model.loadModel(fileName);
 		_transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
 		_transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
 		_transform.SetScale(glm::vec3(1.0, 1.0, 1.0));
@@ -56,7 +58,9 @@ public:
 	Transform _transform;
 	TextureMap _texture;
 	ShaderHandler _shader;
-	MeshHandler _mesh;
+	MeshHandler _mesh; // REMOVE
+
+	Model _model;
 	
 private:
 	
@@ -83,7 +87,7 @@ private:
 	TextureMap tempTexture;
 	ShaderHandler tempShader;
 	MeshHandler tempMesh;
-	
+	Model tempModel;
 	// objects is a vector of objects that will be drawn in the scene. 
 	std::vector<Object> objects;
 	// Arrays of all possible tex/shaders/meshes an object can have 
@@ -92,6 +96,6 @@ private:
 	std::vector<MeshHandler> meshs;
 	
 
-	std::vector<Mesh> Ameshs;
+	std::vector<Model> models;
 };
 

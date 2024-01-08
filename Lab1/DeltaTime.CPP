@@ -15,7 +15,7 @@ void DeltaTime::Update()
 	// deltatime
 	lastTicks = currentTicks;
 	currentTicks = SDL_GetPerformanceCounter();
-	m_deltaTime = ((currentTicks - lastTicks) * 1 / (double)SDL_GetPerformanceFrequency());; // deltatime values are in ms
+	m_deltaTime = ((float)(currentTicks - lastTicks) / (double)SDL_GetPerformanceFrequency());; // deltatime values are in ms
 }
 
 float DeltaTime::GetDeltaTime() const

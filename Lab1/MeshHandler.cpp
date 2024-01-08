@@ -81,7 +81,7 @@ void Model::Draw(const ShaderHandler& shader)
 void Model::loadModel(std::string const &path)
 {
 	Assimp::Importer import;
-	const aiScene * scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene * scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_JoinIdenticalVertices);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
@@ -91,6 +91,7 @@ void Model::loadModel(std::string const &path)
 	directory = path.substr(0, path.find_last_of('/'));
 
 	processNode(scene->mRootNode, scene);
+	std::cout << "ASSIMP:: Loading Model " << path << std::endl;
 }
 
 void Model::processNode(aiNode* node, const aiScene* scene)
@@ -104,10 +105,11 @@ void Model::processNode(aiNode* node, const aiScene* scene)
 	// then do the same for each of its children
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 	{
-		processNode(node->mChildren[i], scene);
+		processNode(node->mChildren[i], scene); //FALLBACK, trying to get node transformations
 	}
 }
 
+//std::shared_ptr<Mesh>
 Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 {
 	vector<Vertex> vertices;
@@ -162,6 +164,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	return Mesh(vertices, indices, textures);
 }
 
+//std::shared_ptr<Texture>
 vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
 	vector<Texture> textures;

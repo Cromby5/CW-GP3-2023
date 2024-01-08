@@ -4,13 +4,22 @@ using namespace std;
 // vertex attributes for a quad that fills the entire screen in Normalized Device Coordinates.
 float quadVertices[] = {
 	//positions   // texCoords
-	-0.5f,  0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.0f, 0.0f,
-	 0.5f, -0.5f,  1.0f, 0.0f,
+	//-0.5f,  0.5f,  0.0f, 1.0f,
+	//-0.5f, -0.5f,  0.0f, 0.0f,
+	// 0.5f, -0.5f,  1.0f, 0.0f,
 
-	-0.5f,  0.5f,  0.0f, 1.0f,
-	 0.5f, -0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f,  1.0f, 1.0f
+	//-0.5f,  0.5f,  0.0f, 1.0f,
+	// 0.5f, -0.5f,  1.0f, 0.0f,
+	// 0.5f,  0.5f,  1.0f, 1.0f
+
+	//// vertex attributes for a quad that fills the half of the screen
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		-1.0f,  0.25f,  0.0f, 0.0f,
+		-0.25f,  0.25f,  1.0f, 0.0f,
+
+		-1.0f,  1.0f,  0.0f, 1.0f,
+		-0.25f,  0.25f,  1.0f, 0.0f,
+		-0.25f,  1.0f,  1.0f, 1.0f
 };
 
 FBO::FBO()
@@ -82,9 +91,7 @@ void FBO::initQuad()
 
 void FBO::drawQuad()
 {
-	glDisable(GL_DEPTH_TEST);
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f); // set clear color to white (not really necessary actually, since we won't be able to see behind the quad anyways)
-	glClear(GL_COLOR_BUFFER_BIT);
+	//glClear(GL_COLOR_BUFFER_BIT);
 
 	fboShader.Use();
 	glBindVertexArray(quadVAO);
@@ -132,7 +139,8 @@ void FBO::GenGBuffer(GLsizei SCR_WIDTH, GLsizei SCR_HEIGHT)
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
 	// finally check if framebuffer is complete
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-		std::cout << "Framebuffer not complete!" << std::endl;
+		std::cout << "Gbuffer not complete!" << std::endl;
+	else std::cout << "Gbuffer complete!" << std::endl;
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 

@@ -22,6 +22,7 @@ public:
 
 	float getScreenWidth();
 	float getScreenHeight();
+	bool  getImGuiStatus();
 	SDL_Window* getWindow();
 
 	//imgui
@@ -32,6 +33,7 @@ public:
 	void newFrameImgui(); // start of each loop
 	void myCustomImguiWindow();
 
+	void ToggleImGuiWindow();
 
 private:
 
@@ -41,5 +43,9 @@ private:
 	SDL_Window* sdlWindow; // holds pointer to out window
 	float screenWidth;
 	float screenHeight;
+	bool show_imgui = true;
+	bool show_demo_window = true;
+	bool show_custom_window = true;
+	bool Vsync = true;
 };
 

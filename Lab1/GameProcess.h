@@ -28,10 +28,10 @@ private:
 	void gameProcessLoop();
 	void drawGame();
 
-
 	DisplayWindow _gameDisplay;
 	GameState _gameState;
 	WorldCamera myCamera;
+	WorldCamera myTopDownCamera;
 	
 	AudioHandler gameAudio;
 	
@@ -39,9 +39,12 @@ private:
 	ObjectHandler objectHandler;
 	DeltaTime deltaTime;
 	FBO fbo;
+	FBO fbo2;
 
 	float counter = 0.0f;
 	float newCount = 0.0f;
-	float speed = 0.5f;
+	float speed = 4.0f;
+
+	const Uint8* keystate;
 };
 

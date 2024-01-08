@@ -147,12 +147,12 @@ void SkyBox::initSkyBox()
 // Skybox texture faces, these have to be in this order to match the faces for OpenGL
 vector<std::string> faces
 {
-	"..\\res\\skybox\\right.jpg",
-	"..\\res\\skybox\\left.jpg",
-	"..\\res\\skybox\\top.jpg",
-	"..\\res\\skybox\\bottom.jpg",
-	"..\\res\\skybox\\front.jpg",
-	"..\\res\\skybox\\back.jpg"
+	"..\\res\\skyboxnight\\right.png",
+	"..\\res\\skyboxnight\\left.png",
+	"..\\res\\skyboxnight\\top.png",
+	"..\\res\\skyboxnight\\bottom.png",
+	"..\\res\\skyboxnight\\front.png",
+	"..\\res\\skyboxnight\\back.png"
 };
 
 void SkyBox::loadCubeMap()

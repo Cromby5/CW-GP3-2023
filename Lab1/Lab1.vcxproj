@@ -153,6 +153,7 @@
     <ClCompile Include="ObjectHandler.cpp" />
     <ClCompile Include="obj_loader.cpp" />
     <ClCompile Include="AudioHandler.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="ShaderHandler.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="stb_image.c" />
@@ -162,7 +163,9 @@
     <ClInclude Include="DeltaTime.h" />
     <ClInclude Include="FBO.h" />
     <ClInclude Include="ObjectHandler.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Skybox.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="WorldCamera.h" />
     <ClInclude Include="DisplayWindow.h" />
     <ClInclude Include="GameProcess.h" />
@@ -170,7 +173,6 @@
     <ClInclude Include="obj_loader.h" />
     <ClInclude Include="AudioHandler.h" />
     <ClInclude Include="ShaderHandler.h" />
-    <ClInclude Include="stb_image.h" />
     <ClInclude Include="TextureMap.h" />
     <ClInclude Include="transform.h" />
   </ItemGroup>

@@ -2,6 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtx/transform.hpp>
+#include "DeltaTime.h"
 
 struct WorldCamera
 {
@@ -51,6 +52,11 @@ public:
 	void MoveRight(float speed)
 	{
 		pos += glm::normalize(glm::cross(forward, up)) * speed;
+	}
+
+	void SetLook(glm::vec3 modelPos)
+	{
+		forward = glm::vec3(glm::normalize(modelPos - pos));
 	}
 
 	void RotateY(float angle)

@@ -18,6 +18,7 @@ DisplayWindow::~DisplayWindow()
 float DisplayWindow::getScreenWidth() { return screenWidth; } // getters
 float DisplayWindow::getScreenHeight() { return screenHeight; }
 SDL_Window* DisplayWindow::getWindow() { return sdlWindow; }
+bool DisplayWindow::getImGuiStatus() { return show_imgui; }
 
 void DisplayWindow::returnError(std::string errorString)
 {
@@ -84,7 +85,7 @@ void DisplayWindow::initDisplay()
 	glEnable(GL_LIGHT0); // enable light 0
 	glEnable(GL_COLOR_MATERIAL); // enable colour material
 
-	SDL_GL_SetSwapInterval(1); // set to 0 to disable vsync
+	SDL_GL_SetSwapInterval(Vsync); // set to 0 to disable vsync
 	
 	glClearColor(0.0f, 1.0f, 1.0f, 1.0f);
 }
@@ -115,23 +116,37 @@ void DisplayWindow::newFrameImgui()
 {
 	// (After event loop)
 	// Start the Dear ImGui frame
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
-	ImGui::NewFrame();
-	ImGui::ShowDemoWindow(); // Show demo window! :)
-	cout << "IMGUI:: NEWFRAME is complete!" << endl;
+	if (show_imgui)
+	{
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplSDL2_NewFrame();
+		ImGui::NewFrame();
+
+		if (show_demo_window)
+		{
+			ImGui::ShowDemoWindow(); // Show demo window! :)
+		}
+		if (show_custom_window)
+		{
+			myCustomImguiWindow();
+		}
+		cout << "IMGUI:: NEWFRAME is complete!" << endl;
+	}
 }
 
 
 void DisplayWindow::renderImgui()
 {
-	//// Rendering
-	//// (Your code clears your framebuffer, renders your other stuff etc.)
-	ImGui::Render();
+	if (show_imgui)
+	{
+		//// Rendering
+		//// (Your code clears your framebuffer, renders your other stuff etc.)
+		ImGui::Render();
 
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	//// (Your code calls SDL_GL_SwapWindow() etc.)
-	cout << "IMGUI:: RENDER is complete!" << endl;
+		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+		//// (Your code calls SDL_GL_SwapWindow() etc.)
+		cout << "IMGUI:: RENDER is complete!" << endl;
+	}
 }
 
 void DisplayWindow::clearImgui()
@@ -142,8 +157,43 @@ void DisplayWindow::clearImgui()
 	ImGui::DestroyContext();
 }
 
+void DisplayWindow::ToggleImGuiWindow()
+{
+	show_imgui = !show_imgui;
+}
+
 void DisplayWindow::myCustomImguiWindow()
 {
+	if (ImGui::CollapsingHeader("Help"))
+	{
+		ImGui::SeparatorText("ABOUT THIS DEMO:");
+		ImGui::BulletText("This is coursework for the Games Programming 3 module, a basic asteroids game made using c++, OpenGL and SDL");
+		ImGui::BulletText("This Coursework contains the following extension material");
+
+		ImGui::SeparatorText("IMGUI");
+		ImGui::BulletText("A custom imgui window, as seen here allowing some values to be altered");
+		ImGui::BulletText("Press TAB to open / close this window");
+
+		ImGui::SeparatorText("ASSIMP");
+		ImGui::BulletText("Assimp Model Loading Integration");
+		ImGui::BulletText("Updated SDL + GLEW versions to support x64, allowing assimp to function");
+		ImGui::BulletText("Mesh class had to be updated to remove any relation to the old obj loader");
+
+
+		ImGui::SeparatorText("GENERAL");
+		ImGui::BulletText("Better responsiveness on movement keys while held down,using SDL_GetKeyboardState");
+	}
+	ImGui::Checkbox("Demo Window", &show_demo_window); // Edit bools storing our windows open/close state
+	ImGui::Checkbox("Vsync", &Vsync);      
+	if (Vsync)
+	{
+		SDL_GL_SetSwapInterval(1);
+	}
+	else
+	{
+		SDL_GL_SetSwapInterval(0);
+	}
+
 	//// 1. Show a simple window
 	//// Tip: if we don't call ImGui::Begin()/ImGui::End() the widgets automatically appears in a window called "Debug"
 	//{
@@ -153,9 +203,6 @@ void DisplayWindow::myCustomImguiWindow()
 	//	ImGui::Text("Hello, world!");                           // Display some text (you can use a format strings too)
 	//	ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f    
 	//	ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-	//	ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our windows open/close state
-	//	ImGui::Checkbox("Another Window", &show_another_window);
 
 	//	if (ImGui::Button("Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
 	//		counter++;

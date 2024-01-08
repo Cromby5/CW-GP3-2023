@@ -2,7 +2,7 @@
 #include <iostream>
 #include <filesystem>
 
-Model tempModel;
+
 ObjectHandler::ObjectHandler()
 {
 
@@ -22,11 +22,10 @@ void ObjectHandler::initObjects()
 	initTextures();
 	initShaders();
 	initMeshes();
-	//tempModel.loadModel("../res/Models/backpack/backpack.obj");
-	tempModel.loadModel("../res/Models/Wooden Crate 01.obj");
+
 	objects.reserve(15); // reserve 15 objects to prevent reallocation of the vector in this example scene.
 
-	tempObject.LoadObject(meshs[0], textures[2], shaders[5]); // Exploding monkey head
+	tempObject.LoadObject(meshs[0],models[0], textures[2], shaders[5]); // Exploding monkey head
 	objects.emplace_back(tempObject); // Add the object to the vector of objects
 	// Adjust position,rotation,scale
 	objects[0].SetObjectPos(glm::vec3(10.0, 1.5, 3.0));
@@ -36,7 +35,7 @@ void ObjectHandler::initObjects()
 	//objects[1].SetObjectPos(glm::vec3(0.0, 3.0, 0.0));
 	
 	// MANDEL A (Final, As seen in document)
-	tempObject.LoadObject(meshs[2], textures[2], shaders[7]);
+	tempObject.LoadObject(meshs[2],models[0],textures[2], shaders[7]);
 	objects.emplace_back(tempObject);
 	objects[1].SetObjectPos(glm::vec3(0, -6.0, 0));
 	objects[1].SetObjectRot(glm::vec3(0, 0, 0));
@@ -145,7 +144,10 @@ void ObjectHandler::initMeshes()
 {
 	// Load in all the meshes and store them in the vector to be used later by any object.
 	meshs.reserve(10); // prevent reallocation of the vector in this example scene.
+	models.reserve(10);
 	
+	// If we use \\ instead of / it will not work beyond windows enviroments.
+
 	tempMesh.loadModel("..\\res\\Models\\monkey3.obj"); // Load a mesh from a file
 	meshs.emplace_back(tempMesh);
 	
@@ -155,33 +157,35 @@ void ObjectHandler::initMeshes()
 	tempMesh.loadModel("..\\res\\Models\\plane.obj");
 	meshs.emplace_back(tempMesh);
 
+	tempModel.loadModel("../res/Models/Wooden Crate 01.obj");
+	models.emplace_back(tempModel);
+
+	tempModel.loadModel("../res/Models/backpack/backpack.obj");
+	models.emplace_back(tempModel);
 
 	// Asteroid Game models
-	// tempMesh.loadModel("..\\res\\Models\\ast.obj");
-	// meshs.emplace_back(tempMesh);
+	tempModel.loadModel("../res/Models/ship.obj");
+	models.emplace_back(tempModel);
 
-	// tempMesh.loadModel("..\\res\\Models\\Asteroid.obj");
-	// meshs.emplace_back(tempMesh);
+	tempModel.loadModel("../res/Models/ast.obj");
+	models.emplace_back(tempModel);
 
-	// tempMesh.loadModel("..\\res\\Models\\Asteroid1.obj");
-	// meshs.emplace_back(tempMesh);
+	tempModel.loadModel("../res/Models/Asteroid.obj");
+	models.emplace_back(tempModel);
 
-	// tempMesh.loadModel("..\\res\\Models\\R33.obj");
-	// meshs.emplace_back(tempMesh);
+	tempModel.loadModel("../res/Models/Asteroid1.obj");
+	models.emplace_back(tempModel);
 
-	// tempMesh.loadModel("..\\res\\Models\\rock.obj");
-	// meshs.emplace_back(tempMesh);
+	tempModel.loadModel("../res/Models/R33.obj");
+	models.emplace_back(tempModel);
 
-	/*
-	tempMesh.loadModel("..\\res\\Models\\cart.obj");
-	meshs.emplace_back(tempMesh);
+	tempModel.loadModel("..//res//Models/rock.obj");
+	models.emplace_back(tempModel);
 
-	tempMesh.loadModel("..\\res\\Models\\canoe.obj");
-	meshs.emplace_back(tempMesh);
+	//OTHER FORMAT ZONE
 
-	tempMesh.loadModel("..\\res\\Models\\Wooden Crate 01.obj");
-	meshs.emplace_back(tempMesh);
-	*/
+	tempModel.loadModel("../res/Models/towerRound_sampleB.fbx");
+	models.emplace_back(tempModel);
 
 }
 
@@ -226,10 +230,11 @@ void ObjectHandler::drawObjects(WorldCamera& myCamera , float counter, float new
 		objects[i]._mesh.draw();
 		objects[i]._mesh.updateSphereData(objects[i]._transform.GetPos(), 1.0f);
 	}
-	shaders[0].Use();
-	shaders[0].Update(objects[0]._transform, myCamera, counter, newCount);
-	textures[2].Bind(0);
-	tempModel.Draw(objects[0]._shader);
+	//TEMP ASSIMP TEST
+	//shaders[0].Use();
+	//shaders[0].Update(objects[0]._transform, myCamera, counter, newCount);
+	//textures[2].Bind(0);
+	//tempModel.Draw(objects[0]._shader);
 }
 
 // Limited to the first 2 objects created for demo purposes and to prevent unecssarsary performance loss for our objects that will never move in this example.
