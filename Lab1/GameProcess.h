@@ -11,12 +11,18 @@
 #include "Deltatime.h"
 #include "FBO.h"
 
+#include "Missile.h"
+#include "Player.h"
+
+#include "scene.h"
+#include "Entity.h"
+
 enum class GameState{PLAY, EXIT};
 
 class GameProcess
 {
 public:
-	GameProcess();
+	GameProcess() : _gameState(GameState::PLAY) , keystate(SDL_GetKeyboardState(NULL)) {};
 	~GameProcess();
 
 	void run();
@@ -28,18 +34,26 @@ private:
 	void gameProcessLoop();
 	void drawGame();
 
+
+	void CreateEntitys();
+	void InstantiateEntityTest();
+
 	DisplayWindow _gameDisplay;
 	GameState _gameState;
 	WorldCamera myCamera;
 	WorldCamera myTopDownCamera;
 	
 	AudioHandler gameAudio;
+
+	Scene activeScene;
 	
 	SkyBox sky;
 	ObjectHandler objectHandler;
 	DeltaTime deltaTime;
 	FBO fbo;
 	FBO fbo2;
+
+	Entity player;
 
 	float counter = 0.0f;
 	float newCount = 0.0f;

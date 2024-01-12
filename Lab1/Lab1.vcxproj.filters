@@ -19,6 +19,12 @@
     <Filter Include="Source Files\imgui">
       <UniqueIdentifier>{8277fe85-5bd5-4484-be04-489b0f2f486b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\asteroid game stuff">
+      <UniqueIdentifier>{6036bba9-7fac-44ac-acdb-018de1a3d531}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\asteroid game stuff">
+      <UniqueIdentifier>{4b64df56-bbab-414b-a7cc-7ac891c89bf6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -84,10 +90,16 @@
     <ClCompile Include="imgui\imgui_widgets.cpp">
       <Filter>Source Files\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Missile.cpp">
+      <Filter>Source Files\asteroid game stuff</Filter>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
+      <Filter>Source Files\asteroid game stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="stb_image.c">
+    <ClCompile Include="Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -131,11 +143,20 @@
     <ClInclude Include="FBO.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="stb_image.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files\asteroid game stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Missile.h">
+      <Filter>Header Files\asteroid game stuff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

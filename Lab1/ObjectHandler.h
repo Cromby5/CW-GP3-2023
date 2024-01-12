@@ -18,9 +18,9 @@ public:
 		
 	};
 	// Overrides to make it easier to create objects
-	Object(MeshHandler& mesh, Model& model ,TextureMap& texture, ShaderHandler& shader)
+	Object(Model& model ,TextureMap& texture, ShaderHandler& shader)
 	{
-		LoadObject(mesh, model ,texture, shader);
+		LoadObject(model ,texture, shader);
 	};
 	
 	Object(const std::string& fileName, TextureMap& texture, ShaderHandler& shader)
@@ -28,11 +28,10 @@ public:
 		LoadObjectFILE(fileName, texture, shader);
 	};
 	// For passing in an already loaded mesh
-	void LoadObject(MeshHandler& mesh, Model& model, TextureMap& texture, ShaderHandler& shader)
+	void LoadObject(Model& model, TextureMap& texture, ShaderHandler& shader)
 	{
 		_texture = texture;
 		_shader = shader;
-		_mesh = mesh; // REMOVE
 		_model = model;
 		_transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
 		_transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
@@ -43,7 +42,6 @@ public:
 	{
 		_texture = texture;
 		_shader = shader;
-		_mesh.loadModel(fileName); // REMOVE
 		_model.loadModel(fileName);
 		_transform.SetPos(glm::vec3(0.0, 0.0, 0.0));
 		_transform.SetRot(glm::vec3(0.0, 0.0, 0.0));
@@ -58,8 +56,6 @@ public:
 	Transform _transform;
 	TextureMap _texture;
 	ShaderHandler _shader;
-	MeshHandler _mesh; // REMOVE
-
 	Model _model;
 	
 private:
@@ -78,24 +74,24 @@ public:
 	void initShaders();
 	void initMeshes();
 	void drawObjects(WorldCamera& myCamera, float counter, float newCount);
-	bool collision(float deltatime, AudioHandler& audio);
+	//bool collision(float deltatime, AudioHandler& audio);
 
+	// I dont like making these public but I need to access them quickly to test some things with entities
+// Arrays of all possible tex/shaders/meshes an object can have 
+	std::vector<TextureMap> textures;
+	std::vector<ShaderHandler> shaders;
+
+	std::vector<Model> models;
 	
 private:
 	// These temp variables are used to avoid the deconstructors when moving the object into the vector array.
 	Object tempObject;
 	TextureMap tempTexture;
 	ShaderHandler tempShader;
-	MeshHandler tempMesh;
+
 	Model tempModel;
 	// objects is a vector of objects that will be drawn in the scene. 
 	std::vector<Object> objects;
-	// Arrays of all possible tex/shaders/meshes an object can have 
-	std::vector<TextureMap> textures;
-	std::vector<ShaderHandler> shaders;
-	std::vector<MeshHandler> meshs;
-	
 
-	std::vector<Model> models;
 };
 

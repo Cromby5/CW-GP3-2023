@@ -97,6 +97,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)\deps\include;$(SolutionDir)\deps\include\AL;$(SolutionDir)\deps\include\assimp;$(SolutionDir)\deps\include\GL;$(SolutionDir)\deps\include\glm;$(SolutionDir)\deps\include\imgui;$(SolutionDir)\deps\include\SDL</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -137,6 +138,7 @@
   <ItemGroup>
     <ClCompile Include="DeltaTime.cpp" />
     <ClCompile Include="DisplayWindow.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FBO.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
@@ -150,20 +152,24 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameProcess.cpp" />
     <ClCompile Include="MeshHandler.cpp" />
+    <ClCompile Include="Missile.cpp" />
     <ClCompile Include="ObjectHandler.cpp" />
     <ClCompile Include="obj_loader.cpp" />
     <ClCompile Include="AudioHandler.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="ShaderHandler.cpp" />
     <ClCompile Include="Skybox.cpp" />
-    <ClCompile Include="stb_image.c" />
     <ClCompile Include="TextureMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DeltaTime.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="FBO.h" />
+    <ClInclude Include="Missile.h" />
     <ClInclude Include="ObjectHandler.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Skybox.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="WorldCamera.h" />

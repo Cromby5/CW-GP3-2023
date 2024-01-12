@@ -116,12 +116,13 @@ void DisplayWindow::newFrameImgui()
 {
 	// (After event loop)
 	// Start the Dear ImGui frame
+	//if (show_imgui)
+	//{
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL2_NewFrame();
+	ImGui::NewFrame();
 	if (show_imgui)
 	{
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplSDL2_NewFrame();
-		ImGui::NewFrame();
-
 		if (show_demo_window)
 		{
 			ImGui::ShowDemoWindow(); // Show demo window! :)
@@ -130,15 +131,15 @@ void DisplayWindow::newFrameImgui()
 		{
 			myCustomImguiWindow();
 		}
-		cout << "IMGUI:: NEWFRAME is complete!" << endl;
 	}
+		cout << "IMGUI:: NEWFRAME is complete!" << endl;
+	//}
 }
 
 
 void DisplayWindow::renderImgui()
 {
-	if (show_imgui)
-	{
+	//if (show_imgui)
 		//// Rendering
 		//// (Your code clears your framebuffer, renders your other stuff etc.)
 		ImGui::Render();
@@ -146,7 +147,6 @@ void DisplayWindow::renderImgui()
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		//// (Your code calls SDL_GL_SwapWindow() etc.)
 		cout << "IMGUI:: RENDER is complete!" << endl;
-	}
 }
 
 void DisplayWindow::clearImgui()
@@ -177,11 +177,20 @@ void DisplayWindow::myCustomImguiWindow()
 		ImGui::SeparatorText("ASSIMP");
 		ImGui::BulletText("Assimp Model Loading Integration");
 		ImGui::BulletText("Updated SDL + GLEW versions to support x64, allowing assimp to function");
-		ImGui::BulletText("Mesh class had to be updated to remove any relation to the old obj loader");
+		ImGui::BulletText("stb_image has also been updated to only require its header file");
+		ImGui::BulletText("Mesh, Texture class had to be updated to remove any relation to the old obj loader");
+		ImGui::BulletText("Essentially a rewrite of those classes to reimplement prior functions");
+
+		ImGui::SeparatorText("EnTT ECS");
+		ImGui::BulletText("Entity Component System using the EnTT library");
+		ImGui::BulletText("A basic implementation of an ECS, with a scene class and entity class");
+		ImGui::BulletText("It currently experiencing bugs so this may be mixed with the old model loading methods to present the work");
 
 
 		ImGui::SeparatorText("GENERAL");
 		ImGui::BulletText("Better responsiveness on movement keys while held down,using SDL_GetKeyboardState");
+		ImGui::BulletText("Attempts to consider memory management, smart pointers etc used when possible / when rewriting areas");
+		ImGui::BulletText("Move / copy constructors, initilazation lists, operators");
 	}
 	ImGui::Checkbox("Demo Window", &show_demo_window); // Edit bools storing our windows open/close state
 	ImGui::Checkbox("Vsync", &Vsync);      

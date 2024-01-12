@@ -12,6 +12,29 @@ public:
 	ShaderHandler();
 	ShaderHandler(const std::string& fileName);
 
+	ShaderHandler(ShaderHandler&& other) {
+		init(other);
+	}
+
+	ShaderHandler(const ShaderHandler& other) {
+		init(other);
+	}
+
+	ShaderHandler& operator=(ShaderHandler&& other)
+	{
+		if (this == &other)
+			return *this;
+		return init(other);
+	}
+
+	ShaderHandler& operator=(const ShaderHandler& other)
+	{
+		if (this == &other)
+			return *this;
+		return init(other);
+	}
+
+
 	void Use(); // Set gpu to use our shaders
 	//void ParseShader(const std::string& filename); // Parse the shader files to seperate vert and frag shaders
 	void Update(const Transform& transform, const WorldCamera& camera, float counter, float newCounter);
@@ -58,8 +81,8 @@ public:
 
 		//if ((glGetUniformLocation(program, name.c_str()) == -1))
 		//{
-		//	std::cerr << "Unable to load shader: " << name.c_str() << std::endl;
-		//	__debugbreak();
+		//std::cerr << "Unable to load shader: " << name.c_str() << std::endl;
+		//__debugbreak();
 		//}
 	}
 	// ------------------------------------------------------------------------
@@ -184,4 +207,23 @@ private:
 	GLuint shaders[NUM_SHADERS]; //array of shaders
 	GLuint shaders1[3]; // Temp for geo shader
 	GLuint uniforms[NUM_UNIFORMS]; //no of uniform variables
+
+
+	ShaderHandler& init(const ShaderHandler& other) {
+		program = other.program;
+		for (unsigned int i = 0; i < NUM_SHADERS; i++)
+			shaders[i] = other.shaders[i];
+		for (unsigned int i = 0; i < NUM_UNIFORMS; i++)
+			uniforms[i] = other.uniforms[i];
+		return *this;
+	}
+
+	ShaderHandler& init(ShaderHandler&& other) {
+		program = other.program;
+		for (unsigned int i = 0; i < NUM_SHADERS; i++)
+			shaders[i] = other.shaders[i];
+		for (unsigned int i = 0; i < NUM_UNIFORMS; i++)
+			uniforms[i] = other.uniforms[i];
+		return *this;
+	}
 };

@@ -1,16 +1,10 @@
 #include "MeshHandler.h"
 #include <vector>
 
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+
 #pragma region Mesh
-Mesh::Mesh(const vector<Vertex>& vertices, const vector<unsigned int>& indices, const vector<Texture>& textures)
-{
-	this->vertices = vertices;
-	this->indices = indices;
-	this->textures = textures;
-
-	setupMesh();
-}
-
 void Mesh::setupMesh()
 {
 	glGenVertexArrays(1, &VAO);
@@ -28,21 +22,32 @@ void Mesh::setupMesh()
 	// vertex positions
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-	// vertex normals
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
 	// vertex texture coords
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoord));
+	// vertex normals
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, texCoord));
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, normal));
+
+
+	/*
+	// vertex tangent
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
+	// vertex bitangent
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, bitangent));
+	*/
 
 	glBindVertexArray(0);
 }
 
 void Mesh::Draw(const ShaderHandler& shader)
 {
-	/*
+	/* This is the way learnopengl.com does it, to get the textures along side the model loading process, would be good to get this working
 	unsigned int diffuseNr = 1;
 	unsigned int specularNr = 1;
+	//unsigned int normalNr = 0, heightNr = 0, ambientNr = 0;
 	for (unsigned int i = 0; i < textures.size(); i++)
 	{
 		glActiveTexture(GL_TEXTURE0 + i); // activate proper texture unit before binding
@@ -53,16 +58,19 @@ void Mesh::Draw(const ShaderHandler& shader)
 			number = std::to_string(diffuseNr++);
 		else if (name == "texture_specular")
 			number = std::to_string(specularNr++);
+		else if (name == "texture_normal")
+			number = std::to_string(normalNr++);
 
 		shader.setInt(("material." + name + number).c_str(), i);
 		glBindTexture(GL_TEXTURE_2D, textures[i].id);
 	}
-	glActiveTexture(GL_TEXTURE0);
 	*/
 	// draw mesh
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+
+	//glActiveTexture(GL_TEXTURE0); //back to default once configured.
 }
 #pragma endregion
 
@@ -75,8 +83,15 @@ Model::Model()
 void Model::Draw(const ShaderHandler& shader)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
-		meshes[i].Draw(shader);
+		meshes[i]->Draw(shader);
 }
+
+void Model::clearModel()
+{
+	meshes.clear();
+	textures_loaded.clear();
+}
+
 
 void Model::loadModel(std::string const &path)
 {
@@ -94,6 +109,7 @@ void Model::loadModel(std::string const &path)
 	std::cout << "ASSIMP:: Loading Model " << path << std::endl;
 }
 
+
 void Model::processNode(aiNode* node, const aiScene* scene)
 {
 	// process all the node's meshes (if any)
@@ -109,8 +125,7 @@ void Model::processNode(aiNode* node, const aiScene* scene)
 	}
 }
 
-//std::shared_ptr<Mesh>
-Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
+std::shared_ptr<Mesh> Model::processMesh(aiMesh* mesh, const aiScene* scene)
 {
 	vector<Vertex> vertices;
 	vector<unsigned int> indices;
@@ -161,7 +176,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vector<Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 			textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
 		}
-	return Mesh(vertices, indices, textures);
+	//return Mesh(vertices, indices, textures);
+	return std::shared_ptr<Mesh> (new Mesh(move(vertices), move(indices), move(textures)));
 }
 
 //std::shared_ptr<Texture>

@@ -23,57 +23,25 @@ void ObjectHandler::initObjects()
 	initShaders();
 	initMeshes();
 
-	objects.reserve(15); // reserve 15 objects to prevent reallocation of the vector in this example scene.
+	objects.reserve(5); // reserve 15 objects to prevent reallocation of the vector in this example scene.
 
-	tempObject.LoadObject(meshs[0],models[0], textures[2], shaders[5]); // Exploding monkey head
+	tempObject.LoadObject(models[2], textures[1], shaders[5]); // Exploding monkey head
 	objects.emplace_back(tempObject); // Add the object to the vector of objects
 	// Adjust position,rotation,scale
 	objects[0].SetObjectPos(glm::vec3(10.0, 1.5, 3.0));
 	
-	//tempObject.LoadObject(meshs[1], textures[0], shaders[4]); // Light Cube
-	//objects.emplace_back(tempObject);
-	//objects[1].SetObjectPos(glm::vec3(0.0, 3.0, 0.0));
-	
-	// MANDEL A (Final, As seen in document)
-	tempObject.LoadObject(meshs[2],models[0],textures[2], shaders[7]);
+	// BACKPACK, texture 3 is the backpack textures
+	tempObject.LoadObject(models[1],textures[3], shaders[0]);
 	objects.emplace_back(tempObject);
 	objects[1].SetObjectPos(glm::vec3(0, -6.0, 0));
 	objects[1].SetObjectRot(glm::vec3(0, 0, 0));
 
-	// MANDEL B (First Attempt, left in for fun)
-	// tempObject.LoadObject(meshs[2], textures[2], shaders[8]);
-	// objects.emplace_back(tempObject);
-	// objects[2].SetObjectPos(glm::vec3(45, -6.0, 45));
-	// objects[2].SetObjectRot(glm::vec3(0, 0, 0));
-
-	// Emap cube
-	//tempObject.LoadObject(meshs[1], textures[1], shaders[6]);
-	//objects.emplace_back(tempObject);
-	//objects[3].SetObjectPos(glm::vec3(0, 2, 2));
-	
-	// Repeat for every object to be added
-	/*
-	tempObject.LoadObject(meshs[0], textures[1], shaders[0]); // Monkey head 2
+	tempObject.LoadObject(models[3], textures[4], shaders[0]); // FBX TEST
 	objects.emplace_back(tempObject);
-	objects[1].SetObjectPos(glm::vec3(100.0, 5, 3.0));
-	*/
-	//tempObject.LoadObject(meshs[2], textures[0], shaders[3]); // Cart, Refraction
-	//objects.emplace_back(tempObject);
-	//objects[3].SetObjectPos(glm::vec3(0.0, 0.5, 8.0));
-	//objects[3].SetObjectScale(glm::vec3(5.0, 5.0, 5.0));
+	objects[2].SetObjectPos(glm::vec3(10, -6.0, 0));
+	objects[2].SetObjectRot(glm::vec3(0, 0, 0));
+	objects[2].SetObjectScale(glm::vec3(0.3, 0.3, 0.3));
 
-	//tempObject.LoadObject(meshs[3], textures[2], shaders[0]); // Canoe
-	//objects.emplace_back(tempObject);
-	//objects[4].SetObjectPos(glm::vec3(-5.0, -2.5, 3.0));
-	//objects[4].SetObjectScale(glm::vec3(0.5, 0.5, 0.5));
-
-	//tempObject.LoadObject(meshs[4], textures[3], shaders[0]); // Backpack
-	//objects.emplace_back(tempObject);
-	//objects[5].SetObjectPos(glm::vec3(5.0, -2.0, 0.0));
-
-	//tempObject.LoadObject(meshs[5], textures[4], shaders[0]); // Wooden Crate
-	//objects.emplace_back(tempObject);
-	//objects[5].SetObjectPos(glm::vec3(-3.0, -2.0, 0.0));
 }
 
 void ObjectHandler::initTextures()
@@ -143,49 +111,27 @@ void ObjectHandler::initShaders()
 void ObjectHandler::initMeshes()
 {
 	// Load in all the meshes and store them in the vector to be used later by any object.
-	meshs.reserve(10); // prevent reallocation of the vector in this example scene.
-	models.reserve(10);
+	models.reserve(15); // prevent reallocation of the vector in this example scene.
 	
-	// If we use \\ instead of / it will not work beyond windows enviroments.
-
-	tempMesh.loadModel("..\\res\\Models\\monkey3.obj"); // Load a mesh from a file
-	meshs.emplace_back(tempMesh);
-	
-	tempMesh.loadModel("..\\res\\Models\\cube.obj");
-	meshs.emplace_back(tempMesh);
-
-	tempMesh.loadModel("..\\res\\Models\\plane.obj");
-	meshs.emplace_back(tempMesh);
+	// If we use \\ instead of / it will not work beyond windows enviroments, better to prepare for cross platform use.
 
 	tempModel.loadModel("../res/Models/Wooden Crate 01.obj");
 	models.emplace_back(tempModel);
+	tempModel.clearModel();
 
 	tempModel.loadModel("../res/Models/backpack/backpack.obj");
 	models.emplace_back(tempModel);
+	tempModel.clearModel();
 
-	// Asteroid Game models
-	tempModel.loadModel("../res/Models/ship.obj");
+	tempModel.loadModel("../res/Models/monkey3.obj");
 	models.emplace_back(tempModel);
-
-	tempModel.loadModel("../res/Models/ast.obj");
-	models.emplace_back(tempModel);
-
-	tempModel.loadModel("../res/Models/Asteroid.obj");
-	models.emplace_back(tempModel);
-
-	tempModel.loadModel("../res/Models/Asteroid1.obj");
-	models.emplace_back(tempModel);
-
-	tempModel.loadModel("../res/Models/R33.obj");
-	models.emplace_back(tempModel);
-
-	tempModel.loadModel("..//res//Models/rock.obj");
-	models.emplace_back(tempModel);
+	tempModel.clearModel();
 
 	//OTHER FORMAT ZONE
 
 	tempModel.loadModel("../res/Models/towerRound_sampleB.fbx");
 	models.emplace_back(tempModel);
+	tempModel.clearModel();
 
 }
 
@@ -195,12 +141,12 @@ void ObjectHandler::drawObjects(WorldCamera& myCamera , float counter, float new
 	for (unsigned int i = 0; i < objects.size(); i++)
 	{
 		// For Emap Forcing, This may be required for proper appearence and of course should not be here.
-		if (i == 3)
-		{
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-			objects[i]._texture.Bind(1);
-		}
+		//if (i == 3)
+		//{
+		//	glEnable(GL_BLEND);
+		//	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//	objects[i]._texture.Bind(1);
+		//}
 		
 		objects[i]._shader.Use();
 		objects[i]._shader.Update(objects[i]._transform, myCamera, counter, newCount);
@@ -214,8 +160,6 @@ void ObjectHandler::drawObjects(WorldCamera& myCamera , float counter, float new
 			objects[i]._texture.Bind(2);
 		}
 		*/
-
-
 		// For collision tests with the monkey models
 		/*
 		if (i == 0)
@@ -227,18 +171,14 @@ void ObjectHandler::drawObjects(WorldCamera& myCamera , float counter, float new
 			objects[i].SetObjectPos(glm::vec3(-sinf(counter),-0.5f, 0.0f));
 		}
 		*/
-		objects[i]._mesh.draw();
-		objects[i]._mesh.updateSphereData(objects[i]._transform.GetPos(), 1.0f);
+		objects[i]._model.Draw(objects[i]._shader);
+		//objects[i]._mesh.updateSphereData(objects[i]._transform.GetPos(), 1.0f);
 	}
-	//TEMP ASSIMP TEST
-	//shaders[0].Use();
-	//shaders[0].Update(objects[0]._transform, myCamera, counter, newCount);
-	//textures[2].Bind(0);
-	//tempModel.Draw(objects[0]._shader);
 }
 
 // Limited to the first 2 objects created for demo purposes and to prevent unecssarsary performance loss for our objects that will never move in this example.
 // Disabled for Graphics Programming
+/*
 bool ObjectHandler::collision(float deltatime, AudioHandler& audio)
 {
 	while (deltatime > 0) // To keep the amount of collisions the same between any frame rate change
@@ -264,3 +204,4 @@ bool ObjectHandler::collision(float deltatime, AudioHandler& audio)
 	// To make sure all paths return a value
 	return false;
 }
+*/

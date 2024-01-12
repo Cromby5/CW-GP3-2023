@@ -3,11 +3,6 @@
 #include <string>
 
 
-GameProcess::GameProcess()
-{
-	_gameState = GameState::PLAY;
-}
-
 GameProcess::~GameProcess()
 {
 }
@@ -25,6 +20,8 @@ void GameProcess::initSystems()
 	objectHandler.initObjects();
 	gameAudio.initAudio();
 
+	CreateEntitys();
+
 	_gameDisplay.initImgui();
 
 	fbo.initQuad();
@@ -36,8 +33,6 @@ void GameProcess::initSystems()
 	myTopDownCamera.initWorldCamera(glm::vec3(0, 20, 5), 70.0f, (float)_gameDisplay.getScreenWidth() / _gameDisplay.getScreenHeight(), 0.01f, 1000.0f);
 
 	counter = 1.0f;
-	const Uint8* keystate = SDL_GetKeyboardState(NULL);
-
 }
 
 void GameProcess::gameProcessLoop()
@@ -49,7 +44,9 @@ void GameProcess::gameProcessLoop()
 		Input();
 		_gameDisplay.newFrameImgui();
 		drawGame();
-		objectHandler.collision(deltaTime.GetDeltaTime(), gameAudio);
+
+		//objectHandler.collision(deltaTime.GetDeltaTime(), gameAudio);
+		activeScene.CheckCollisionsEntity(player ,deltaTime.GetDeltaTime());
 	}
 }
 
@@ -70,7 +67,7 @@ void GameProcess::Input()
 				{
 					case SDLK_SPACE:
 						// Shoot Missiles
-
+						InstantiateEntityTest();
 						break;
 					case SDLK_ESCAPE:
 						_gameState = GameState::EXIT;
@@ -78,6 +75,9 @@ void GameProcess::Input()
 					case SDLK_TAB:
 						// Open / close imgui window
 						_gameDisplay.ToggleImGuiWindow();
+						break;
+				    case SDLK_p:
+						myCamera.SetLook(glm::vec3(0, 0, 0));
 						break;
 				}
 			}
@@ -97,7 +97,7 @@ void GameProcess::Input()
 		_gameDisplay.imguiProcessEvent(event); // Start the Dear ImGui frame
 	}
 	// GET KEYBOARD STATE, for continuous movement as keydown events are only registered once or something that makes it so that the camera only moves once per tick when a key is pressed
-	// Still not as smooth as I would like, but it works for actual gameplay and is more responsive than the keydown events
+	// very smooth, after fixing the deltatime issue
 	SDL_PumpEvents();
 	keystate = SDL_GetKeyboardState(NULL);
 	float mspeed = speed * deltaTime.GetDeltaTime();
@@ -125,12 +125,14 @@ void GameProcess::drawGame()
 	fbo.bindFBO(); // Draw to FBO
 		sky.drawSkyBox(myTopDownCamera);
 		objectHandler.drawObjects(myTopDownCamera,counter,newCount);
+		activeScene.Update(deltaTime.GetDeltaTime(), myTopDownCamera, counter, newCount);
 	fbo.unbindFBO();
 
 	fbo.drawQuad(); // draw fbo to screen
 	glEnable(GL_DEPTH_TEST);
 	sky.drawSkyBox(myCamera);
 	objectHandler.drawObjects(myCamera, counter, newCount);
+	activeScene.Update(deltaTime.GetDeltaTime(), myCamera, counter, newCount);
 
 	_gameDisplay.renderImgui(); // Render imgui
 	counter += deltaTime.GetDeltaTime() * 1.0f;
@@ -141,3 +143,60 @@ void GameProcess::drawGame()
 	glEnd();
 	_gameDisplay.swapBuffer();
 } 
+
+
+
+
+void GameProcess::CreateEntitys()
+{
+	// 1
+	auto& test = activeScene.CreateEntity("Missile");
+	test.AddComponent<Model>("../res/Models/monkey3.obj");
+	test.AddComponent<ShaderHandler>("..\\res\\Shaders\\shader");
+	test.AddComponent<TextureMap>("..\\res\\Textures\\Oak-Architextures.jpg");
+	test.AddComponent<Missile>();
+	test.AddComponent<Sphere>();
+	test.GetComponent<Transform>().SetPos(glm::vec3(0.0, 0.0, 0.0));
+
+
+	player = activeScene.CreateEntity("Ship");
+	player.AddComponent<Model>("../res/Models/ship.obj");
+	player.AddComponent<ShaderHandler>("..\\res\\Shaders\\shader");
+	player.AddComponent<TextureMap>("..\\res\\Textures\\Oak-Architextures.jpg");
+	player.AddComponent<Sphere>();
+	player.AddComponent<Player>();
+	player.GetComponent<Transform>().SetPos(glm::vec3(0.0, 0.0, 0.0));
+	player.GetComponent<Transform>().SetScale(glm::vec3(0.01, 0.01, 0.01));
+
+	// lets actually have some asteroids in this scene to crash into at least
+	for (int i = 0; i < 20; i++)
+	{
+		auto& test2 = activeScene.CreateEntity("Asteroid");
+		test2.AddComponent<Model>("../res/Models/Rock1.obj");
+		test2.AddComponent<ShaderHandler>("..\\res\\Shaders\\shader");
+		test2.AddComponent<TextureMap>("..\\res\\Textures\\water.jpg");
+		test2.AddComponent<Sphere>();
+		// random position
+		test2.GetComponent<Transform>().SetPos(glm::vec3(rand() % 100 - 50, rand() % 100 - 50, rand() % 100 - 50));
+		test2.GetComponent<Transform>().SetScale(glm::vec3(0.1, 0.1, 0.1));
+	}
+
+	// 2
+	//auto& test2 = activeScene.CreateEntity("stealing preloads from objhandler goes wrong");
+	//test2.AddComponent<Model>(objectHandler.models[0]);
+	//test2.AddComponent<ShaderHandler>("..\\res\\Shaders\\shader");
+	//test2.AddComponent<TextureMap>(objectHandler.textures[0]);
+	//test2.GetComponent<Transform>().SetPos(glm::vec3(0.0, -5.0, 0.0));
+
+}
+
+void GameProcess::InstantiateEntityTest()
+{
+	auto& missile = activeScene.CreateEntity("Missile");
+	missile.AddComponent<Model>("../res/Models/monkey3.obj");
+	missile.AddComponent<ShaderHandler>("..\\res\\Shaders\\shader");
+	missile.AddComponent<TextureMap>("..\\res\\Textures\\Oak-Architextures.jpg");
+	//.AddComponent<Missile>();
+	missile.AddComponent<Sphere>();
+	missile.GetComponent<Transform>().SetPos(myCamera.getPos());
+}
