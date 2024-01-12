@@ -29,7 +29,7 @@ void GameProcess::initSystems()
 	fbo2.genFBO(_gameDisplay.getScreenWidth(), _gameDisplay.getScreenHeight());
 	fbo.GenGBuffer(_gameDisplay.getScreenWidth(), _gameDisplay.getScreenHeight());
 	
-	myCamera.initWorldCamera(glm::vec3(0, 0, 5), 70.0f, (float)_gameDisplay.getScreenWidth()/_gameDisplay.getScreenHeight(), 0.01f, 1000.0f);
+	myCamera.initWorldCamera(glm::vec3(0, 0, 5), 70.0f, (float)_gameDisplay.getScreenWidth()/_gameDisplay.getScreenHeight(), 0.1f, 1000.0f);
 	myTopDownCamera.initWorldCamera(glm::vec3(0, 20, 5), 70.0f, (float)_gameDisplay.getScreenWidth() / _gameDisplay.getScreenHeight(), 0.01f, 1000.0f);
 
 	counter = 1.0f;
@@ -68,6 +68,7 @@ void GameProcess::Input()
 					case SDLK_SPACE:
 						// Shoot Missiles
 						InstantiateEntityTest();
+						//gameAudio.playSound(0);
 						break;
 					case SDLK_ESCAPE:
 						_gameState = GameState::EXIT;
@@ -76,9 +77,9 @@ void GameProcess::Input()
 						// Open / close imgui window
 						_gameDisplay.ToggleImGuiWindow();
 						break;
-				    case SDLK_p:
+				  /*  case SDLK_p:
 						myCamera.SetLook(glm::vec3(0, 0, 0));
-						break;
+						break;*/
 				}
 			}
 			break;
@@ -113,6 +114,9 @@ void GameProcess::Input()
 	if (keystate[SDL_SCANCODE_S]) {
 		myCamera.MoveForward(-mspeed);
 	}
+	if (keystate[SDL_SCANCODE_P]) {
+		myCamera.SetLook(glm::vec3(0, 0, 0));
+	}
 }
 	
 
@@ -125,14 +129,14 @@ void GameProcess::drawGame()
 	fbo.bindFBO(); // Draw to FBO
 		sky.drawSkyBox(myTopDownCamera);
 		objectHandler.drawObjects(myTopDownCamera,counter,newCount);
-		activeScene.Update(deltaTime.GetDeltaTime(), myTopDownCamera, counter, newCount);
+		activeScene.Update(deltaTime.GetDeltaTime(), myTopDownCamera, counter, newCount,false);
 	fbo.unbindFBO();
 
 	fbo.drawQuad(); // draw fbo to screen
 	glEnable(GL_DEPTH_TEST);
 	sky.drawSkyBox(myCamera);
 	objectHandler.drawObjects(myCamera, counter, newCount);
-	activeScene.Update(deltaTime.GetDeltaTime(), myCamera, counter, newCount);
+	activeScene.Update(deltaTime.GetDeltaTime(), myCamera, counter, newCount,true);
 
 	_gameDisplay.renderImgui(); // Render imgui
 	counter += deltaTime.GetDeltaTime() * 1.0f;
@@ -145,7 +149,7 @@ void GameProcess::drawGame()
 } 
 
 
-
+// bloat that can go elsewhere, shows off the ecs though
 
 void GameProcess::CreateEntitys()
 {
@@ -156,7 +160,7 @@ void GameProcess::CreateEntitys()
 	test.AddComponent<TextureMap>("..\\res\\Textures\\Oak-Architextures.jpg");
 	test.AddComponent<Missile>();
 	test.AddComponent<Sphere>();
-	test.GetComponent<Transform>().SetPos(glm::vec3(0.0, 0.0, 0.0));
+	test.GetComponent<Transform>().SetPos(glm::vec3(0.0, 0.0, 50.0));
 
 
 	player = activeScene.CreateEntity("Ship");
@@ -166,10 +170,10 @@ void GameProcess::CreateEntitys()
 	player.AddComponent<Sphere>();
 	player.AddComponent<Player>();
 	player.GetComponent<Transform>().SetPos(glm::vec3(0.0, 0.0, 0.0));
-	player.GetComponent<Transform>().SetScale(glm::vec3(0.01, 0.01, 0.01));
+	player.GetComponent<Transform>().SetScale(glm::vec3(0.008, 0.008, 0.008));
 
 	// lets actually have some asteroids in this scene to crash into at least
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 30; i++)
 	{
 		auto& test2 = activeScene.CreateEntity("Asteroid");
 		test2.AddComponent<Model>("../res/Models/Rock1.obj");
@@ -179,6 +183,7 @@ void GameProcess::CreateEntitys()
 		// random position
 		test2.GetComponent<Transform>().SetPos(glm::vec3(rand() % 100 - 50, rand() % 100 - 50, rand() % 100 - 50));
 		test2.GetComponent<Transform>().SetScale(glm::vec3(0.1, 0.1, 0.1));
+		test2.GetComponent<Sphere>().SetPos(test2.GetComponent<Transform>().GetPos()); // do i really need to do this after?
 	}
 
 	// 2
@@ -193,10 +198,12 @@ void GameProcess::CreateEntitys()
 void GameProcess::InstantiateEntityTest()
 {
 	auto& missile = activeScene.CreateEntity("Missile");
-	missile.AddComponent<Model>("../res/Models/monkey3.obj");
+	missile.AddComponent<Model>("../res/Models/monkey3.obj"); // change this to using preloaded models 
 	missile.AddComponent<ShaderHandler>("..\\res\\Shaders\\shader");
 	missile.AddComponent<TextureMap>("..\\res\\Textures\\Oak-Architextures.jpg");
-	//.AddComponent<Missile>();
+	missile.AddComponent<Missile>();
 	missile.AddComponent<Sphere>();
-	missile.GetComponent<Transform>().SetPos(myCamera.getPos());
+	missile.GetComponent<Sphere>().SetPos(missile.GetComponent<Transform>().GetPos());
+	missile.GetComponent<Transform>().SetPos(myCamera.getPos() + glm::vec3(0.0f,-2.0f,0.0f)); // going for an underbarrel type thing here
+	missile.GetComponent<Transform>().SetForward(myCamera.GetForward());
 }

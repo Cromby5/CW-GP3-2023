@@ -12,6 +12,14 @@ Missile::~Missile()
 
 void Missile::updateMissile(float deltaTime)
 {
-	currentLifeTime += 0.10f * deltaTime;
-	std::cout << currentLifeTime << std::endl;
+	currentLifeTime += 0.5f * deltaTime;
+}
+
+bool Missile::CheckLifeTime()
+{
+	if (currentLifeTime >= lifeTime)
+	{
+		return true;
+	}
+	return false;
 }

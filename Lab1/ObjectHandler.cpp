@@ -25,22 +25,28 @@ void ObjectHandler::initObjects()
 
 	objects.reserve(5); // reserve 15 objects to prevent reallocation of the vector in this example scene.
 
-	tempObject.LoadObject(models[2], textures[1], shaders[5]); // Exploding monkey head
+	tempObject.LoadObject(models[1], textures[1], shaders[0]); // Exploding monkey head
 	objects.emplace_back(tempObject); // Add the object to the vector of objects
 	// Adjust position,rotation,scale
 	objects[0].SetObjectPos(glm::vec3(10.0, 1.5, 3.0));
 	
 	// BACKPACK, texture 3 is the backpack textures
-	tempObject.LoadObject(models[1],textures[3], shaders[0]);
+	tempObject.LoadObject(models[0],textures[3], shaders[0]);
 	objects.emplace_back(tempObject);
 	objects[1].SetObjectPos(glm::vec3(0, -6.0, 0));
 	objects[1].SetObjectRot(glm::vec3(0, 0, 0));
 
-	tempObject.LoadObject(models[3], textures[4], shaders[0]); // FBX TEST
+	tempObject.LoadObject(models[2], textures[4], shaders[0]); // FBX TEST
 	objects.emplace_back(tempObject);
 	objects[2].SetObjectPos(glm::vec3(10, -6.0, 0));
 	objects[2].SetObjectRot(glm::vec3(0, 0, 0));
 	objects[2].SetObjectScale(glm::vec3(0.3, 0.3, 0.3));
+
+	tempObject.LoadObject(models[3], textures[5], shaders[0]); // FBX TEST 2
+	objects.emplace_back(tempObject);
+	objects[3].SetObjectPos(glm::vec3(10, -6.0, 7));
+	objects[3].SetObjectRot(glm::vec3(0, 0, 0));
+	objects[3].SetObjectScale(glm::vec3(0.3, 0.3, 0.8));
 
 }
 
@@ -67,6 +73,9 @@ void ObjectHandler::initTextures()
 	textures.emplace_back(tempTexture);
 
 	tempTexture.LoadTexture("..\\res\\Textures\\Walnut-Architextures.jpg", 0);
+	textures.emplace_back(tempTexture);
+
+	tempTexture.LoadTexture("..\\res\\Textures\\container2.png", 0);
 	textures.emplace_back(tempTexture);
 
 }
@@ -111,13 +120,9 @@ void ObjectHandler::initShaders()
 void ObjectHandler::initMeshes()
 {
 	// Load in all the meshes and store them in the vector to be used later by any object.
-	models.reserve(15); // prevent reallocation of the vector in this example scene.
+	models.reserve(6); // prevent reallocation of the vector in this example scene.
 	
 	// If we use \\ instead of / it will not work beyond windows enviroments, better to prepare for cross platform use.
-
-	tempModel.loadModel("../res/Models/Wooden Crate 01.obj");
-	models.emplace_back(tempModel);
-	tempModel.clearModel();
 
 	tempModel.loadModel("../res/Models/backpack/backpack.obj");
 	models.emplace_back(tempModel);
@@ -130,6 +135,14 @@ void ObjectHandler::initMeshes()
 	//OTHER FORMAT ZONE
 
 	tempModel.loadModel("../res/Models/towerRound_sampleB.fbx");
+	models.emplace_back(tempModel);
+	tempModel.clearModel();
+
+	tempModel.loadModel("../res/Models/container-low/container.fbx");
+	models.emplace_back(tempModel);
+	tempModel.clearModel();
+
+	tempModel.loadModel("../res/Models/BoomBox.glb");
 	models.emplace_back(tempModel);
 	tempModel.clearModel();
 

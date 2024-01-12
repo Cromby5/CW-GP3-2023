@@ -42,6 +42,7 @@ public:
 	inline void SetPos(glm::vec3& pos) { this->pos = pos; } // setters
 	inline void SetRot(glm::vec3& rot) { this->rot = rot; }
 	inline void SetScale(glm::vec3& scale) { this->scale = scale; }
+	inline void SetForward(glm::vec3& forward) { this->forward = forward; }
 
 	void MoveForward(float speed)
 	{
@@ -52,6 +53,7 @@ public:
 	{
 		pos += glm::normalize(glm::cross(forward, up)) * speed;
 	}
+
 
 protected:
 private:

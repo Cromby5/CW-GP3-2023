@@ -23,9 +23,11 @@ public:
 	Scene();
 	~Scene();
 
-	void Update(float deltaTime, const WorldCamera& cam, float counter, float newCounter);
+	void Update(float deltaTime, const WorldCamera& cam, float counter, float newCounter, bool imgui);
 
 	void CheckCollisionsEntity(Entity entity, float deltaTime); // entity here represents our player for now, doing this to force everything else to get destroyed when hit by them, ignore everything else
+
+	void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f); // for imgui, ideally make a imgui class to handle all of this
 
 	Entity CreateEntity(const std::string& name = std::string()); // the = std::string() is a default parameter, so if no name is passed in, it will be an empty string
 

@@ -77,6 +77,13 @@ class Entity
 
 		operator entt::entity() const { return m_entity; } // this is great, allows us to use the entity like an entt::entity, used above for destroy
 
+		bool operator==(const Entity& other) const 
+		{ return m_entity == other.m_entity && m_scene == other.m_scene; }
+
+		bool operator!=(const Entity& other) const
+		{ return !(*this == other); }
+
+
 	private:
 		bool active = true;
 		entt::entity m_entity{ entt::null }; // set like this since its valid to have an empty entity

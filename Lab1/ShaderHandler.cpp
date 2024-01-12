@@ -135,11 +135,7 @@ void ShaderHandler::Update(const Transform& transform, const WorldCamera& camera
 	setFloat("time", counter);
 	setFloat("mandelTime", newCounter);
 	//ShaderHandler::UpdateSky(camera);
-	
 	// New emapping
-	
-	
-	
 }
 
 void ShaderHandler::UpdateSky(const WorldCamera& camera)

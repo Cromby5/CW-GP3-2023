@@ -44,7 +44,7 @@ private:
 	float screenWidth;
 	float screenHeight;
 	bool show_imgui = true;
-	bool show_demo_window = true;
+	bool show_demo_window = false;
 	bool show_custom_window = true;
 	bool Vsync = true;
 };

@@ -132,7 +132,7 @@ void DisplayWindow::newFrameImgui()
 			myCustomImguiWindow();
 		}
 	}
-		cout << "IMGUI:: NEWFRAME is complete!" << endl;
+		//cout << "IMGUI:: NEWFRAME is complete!" << endl;
 	//}
 }
 
@@ -146,7 +146,7 @@ void DisplayWindow::renderImgui()
 
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 		//// (Your code calls SDL_GL_SwapWindow() etc.)
-		cout << "IMGUI:: RENDER is complete!" << endl;
+		//cout << "IMGUI:: RENDER is complete!" << endl;
 }
 
 void DisplayWindow::clearImgui()
@@ -172,6 +172,7 @@ void DisplayWindow::myCustomImguiWindow()
 
 		ImGui::SeparatorText("IMGUI");
 		ImGui::BulletText("A custom imgui window, as seen here allowing some values to be altered");
+		ImGui::BulletText("I wanted this for some basic scene editing stuff, very experimental");
 		ImGui::BulletText("Press TAB to open / close this window");
 
 		ImGui::SeparatorText("ASSIMP");
@@ -185,6 +186,7 @@ void DisplayWindow::myCustomImguiWindow()
 		ImGui::BulletText("Entity Component System using the EnTT library");
 		ImGui::BulletText("A basic implementation of an ECS, with a scene class and entity class");
 		ImGui::BulletText("It currently experiencing bugs so this may be mixed with the old model loading methods to present the work");
+		ImGui::BulletText("Textures are broken with the scene rendering method, a bug that I could not fix in time, we can see textures working as normal elsewhere");
 
 
 		ImGui::SeparatorText("GENERAL");

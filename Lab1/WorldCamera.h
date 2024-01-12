@@ -29,6 +29,12 @@ public:
 		return pos;
 	}
 
+
+	inline glm::vec3 GetForward() const
+	{
+		return forward;
+	}
+
 	inline glm::mat4 GetViewProjection() const
 	{
 		return projection * glm::lookAt(pos, pos + forward, up);
@@ -75,6 +81,17 @@ public:
 
 		forward = glm::vec3(glm::normalize(rotation * glm::vec4(forward, 0.0)));
 		up = glm::vec3(glm::normalize(rotation * glm::vec4(up, 0.0)));
+	}
+
+	// Get pitch / yaw
+	inline float GetPitch() const
+	{
+		return glm::degrees(glm::asin(forward.y));
+	}
+
+	inline float GetYaw() const
+	{
+		return glm::degrees(glm::atan(forward.x, forward.z));
 	}
 
 protected:
